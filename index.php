@@ -4,35 +4,35 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 
-$data = [
-  ['Group 1', 'Text 1'],
-  ['Group 2', 'Text 2'],
-  ['Title 3', 'Text 3'],
-  ['Title 3768126471461874', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 33424209489028429079', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 32i58729527985289752982857298572985729857987298572983', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3184718461987194732848729847298479'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'], 
-  ['Title 3', 'Text 3184718461987194732848729847298479'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'], 
-  ['Title 3', 'Text 3184718461987194732848729847298479'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'],
-  ['Title 3', 'Text 3'], 
-];
+// $data = [
+//   ['Group 1', 'Text 1'],
+//   ['Group 2', 'Text 2'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3768126471461874', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 33424209489028429079', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 32i58729527985289752982857298572985729857987298572983', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3184718461987194732848729847298479'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'], 
+//   ['Title 3', 'Text 3184718461987194732848729847298479'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'], 
+//   ['Title 3', 'Text 3184718461987194732848729847298479'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'],
+//   ['Title 3', 'Text 3'], 
+// ];
 
 // Create connection
-$conn = new mysqli($servername, $username, $password,"ucl_db");
+$conn = new mysqli($servername, $username, $password,"group_maker_db");
 
 // Check connection
 if ($conn->connect_error) {
@@ -40,7 +40,7 @@ if ($conn->connect_error) {
 }
 // echo "Connected successfully <br>";
 	
-$sql = "SELECT * FROM `users`";
+$sql = "SELECT * FROM `groups`";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
     // echo "Name: " . $row["user_name"]. " " . $row["last_name"]. "<br>";
   }
 } else {
-  echo "0 results";
+  // echo "0 groups";
 }
 
 
@@ -126,6 +126,10 @@ html, body {
  justify-items-center content-around p-20">
     <!-- Content here -->
 		<?php 
+      if ($data === NULL) {
+        echo '<p class="justify-items-center">No groups exist!</p>';
+      }
+      else {
 			echo '
 			
 			';
@@ -156,7 +160,7 @@ html, body {
 			}
 			
 			
-			echo '';
+			echo '';}
 		
 		?>
 
