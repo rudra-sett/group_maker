@@ -1,12 +1,3 @@
-<?php
-// the wrong password will cause the page to reload with this parameter, alerting
-// the user that the password was wrong
-// if (isset($_REQUEST['lf']))
-// {
-//   echo "<script> alert('Incorrect password or email!') </script>";
-// }
-?>
-
 <html>
 
 <head>
@@ -77,8 +68,10 @@
         // Do something with the response data
         if (data.substring(0,5) == "ERROR") {
           alert(data.substring(6));
+        } else if (data == "SUCCESS") {
+          window.location.href = "index.php";
         }
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => console.error('Error:', error));
   }

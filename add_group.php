@@ -1,6 +1,20 @@
 <?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// Create connection
+require('php_connect/DB_connect.php');
+$signed_in = false;
+session_start();
+if (isset($_SESSION['user_id'])) {
+  $signed_in = true;
+  $user_id = $_SESSION['user_id'];
+}
 
+if (!$signed_in) {
+  header('Location: ../index.php');
+}
 ?>
 
 
@@ -10,25 +24,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <meta charset="utf-8">
 <title></title>
-<style type="text/tailwindcss">
-  @tailwind base;
-    @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-    }
-</style>
-<style>
-
-
-html, body {
-  height: 100%;
-}
-
-.content-wrapper {
-  padding-bottom: 40px;
-}
-</style>
 </head>
 <body>
 
