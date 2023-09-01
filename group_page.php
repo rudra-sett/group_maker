@@ -64,14 +64,17 @@ $messages = $conn->query($messages_query);
 
 <head>
   <title>
-    Registration Form
+    Group
   </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <meta charset="utf-8">
 </head>
 
-<script>
-
+<script type="text/javascript">
+  function sendMessage() { 
+    var message = document.getElementById('messageInput').value;
+    window.location.href = "php/send_message.php?message="+message+"&group="+<?=$group['group_id']?>;
+  }
 </script>
 
 <body>
@@ -185,7 +188,7 @@ $messages = $conn->query($messages_query);
       <div id="messageUIContainer" class="p-8 flex flex-row w-full gap-8 justify-between">
         <input id="messageInput" type="text"
           class="border border-violet-200 min-h-[4rem] rounded p-2 w-full max-h-48 resize-none" placeholder="Send message to the group...">
-        <button onclick="" class="text-violet-50 text-lg bg-violet-400 shadow-xl p-2 rounded-md
+        <button onclick="sendMessage()" class="text-violet-50 text-lg bg-violet-400 shadow-xl p-2 rounded-md
  hover:bg-violet-600 active:bg-violet-700 min-w-[10%]">
           Send
         </button>

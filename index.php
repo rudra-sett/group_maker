@@ -93,6 +93,7 @@ function isInAnyGroup($id_to_check): bool
 
 <body>
   <div>
+    <h3 class="pt-6 pl-6 text-xl text-center">Click on any group's name to see more info</h3>
     <!-- The main content div -->
     <div class="content-wrapper grid sm:grid-cols-2 gap-4 lg:grid-cols-4
  justify-items-center content-around p-20">
