@@ -29,7 +29,8 @@ if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
 }
 
-function isInAnyGroup($id_to_check) : bool {
+function isInAnyGroup($id_to_check): bool
+{
   global $conn;
   $check_query = "SELECT * FROM groups_and_members 
   WHERE `groups_and_members`.`member_id` = '$id_to_check'";
@@ -53,22 +54,38 @@ function isInAnyGroup($id_to_check) : bool {
   <meta charset="utf-8">
   <title>Join a group</title>
 
-  <style>
-    :root {
+  <!-- <style type="text/tailwindcss">
+    /* :root {
       --ice-blue: #90fcf9ff;
       --magnolia: #f8f1ffff;
       --sandy-brown: #ff9b54ff;
       --russian-violet: #251351ff;
       --cardinal: #d11149ff;
+    } */
+
+    /* Card collapsed by default */
+    .hidden {
+      @apply hidden max-h-0 overflow-hidden;
     }
-  </style>
+
+    /* When header clicked, expand card */
+    .group-card:focus-within .hidden {
+      @apply max-h-full overflow-auto;
+    }
+
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style> -->
   <script type="text/javascript">
     function leaveGroup(group_id) {
-      window.location.href = "php/leave_group.php?group="+group_id;
+      window.location.href = "php/leave_group.php?group=" + group_id;
     }
 
     function joinGroup(group_id) {
-      window.location.href = "php/join_group.php?group="+group_id;
+      window.location.href = "php/join_group.php?group=" + group_id;
     }
 
   </script>
@@ -76,7 +93,8 @@ function isInAnyGroup($id_to_check) : bool {
 
 <body>
   <div>
-    <div class="content-wrapper grid sm:grid-cols-2 gap-4 lg:sm:grid-cols-4
+    <!-- The main content div -->
+    <div class="content-wrapper grid sm:grid-cols-2 gap-4 lg:grid-cols-4
  justify-items-center content-around p-20">
       <!-- Content here -->
       <?php if ($groups_result->num_rows == 0): ?>
@@ -86,14 +104,19 @@ function isInAnyGroup($id_to_check) : bool {
 
         <?php while ($group = $groups_result->fetch_assoc()): ?>
 
-          <article class="rounded-md overflow-auto shadow-lg min-w-full w-1/4 max-h-96">
+          <article class="peer group-card transition-all ease-in-out bg-slate-50 
+          rounded-md overflow-auto shadow-lg w-full max-h-96
+          hover:scale-110 active:scale-95
+          ">
 
-            <h3 class="px-6 py-4 bg-gray-200 text-gray-700 text-xl text-ellipsis overflow-hidden max-h-48 break-words">
+
+            <h3
+              class="px-6 py-4 bg-gray-200 text-gray-700 text-xl text-ellipsis overflow-hidden max-h-48 break-words cursor-pointer"
+              onclick="window.location.href = 'group_page.php?group=<?= $group['group_id'];?>'">
               <?= $group['name']; ?>
             </h3>
-
+            <!-- The list of members -->
             <div class="px-6 pb-4">
-
               <?php
               // Reset pointer to start, to get members for current group
               $members_result->data_seek(0);
@@ -111,6 +134,12 @@ function isInAnyGroup($id_to_check) : bool {
                   <span class="font-light text-xs leading-3 mb-8">
                     <?= "" . $member['year'] . "" ?>
                   </span>
+                  <div class="hidden pt-4 pb-6 px-6">
+
+                    <!-- Show more info here -->
+                    <p>Detailed description of the group</p>
+
+                  </div>
                   <!-- <p class="mb-4 text-gray-700 overflow-y-auto max-h-24 text-ellipsis overflow-hidden break-words">
                     <span>
                       <?= $member['bio']; ?>
@@ -123,20 +152,20 @@ function isInAnyGroup($id_to_check) : bool {
                     </button> -->
                   <?php endif; ?>
                 <?php endif; ?>
-              <?php endwhile; ?>  
+              <?php endwhile; ?>
               <hr>
             </div>
             <div id="cardButtonPanel" class="relative bottom-0">
               <?php if ($is_member): ?>
-                <button id="leave-group-btn" onclick="leaveGroup(<?php echo $group['group_id']?>)"
+                <button id="leave-group-btn" onclick="leaveGroup(<?php echo $group['group_id'] ?>)"
                   class="place-self-center text-violet-50 text-sm bg-violet-400 p-2 rounded-md shadow-xl hover:bg-violet-600 active:bg-violet-700 ml-2 mb-2">
                   Leave group
                 </button>
-                <?php $in_group = true;?>
+                <?php $in_group = true; ?>
               <?php endif; ?>
 
               <?php if (!$is_member & $signed_in & !isInAnyGroup($user_id)): ?>
-                <button id="join-group-btn" onclick="joinGroup(<?php echo $group['group_id']?>)"
+                <button id="join-group-btn" onclick="joinGroup(<?php echo $group['group_id'] ?>)"
                   class="place-self-center text-violet-50 text-sm bg-violet-400 p-2 rounded-md shadow-xl hover:bg-violet-600 active:bg-violet-700 ml-2 mb-2">
                   Join group
                 </button>
@@ -149,6 +178,8 @@ function isInAnyGroup($id_to_check) : bool {
 
       <?php endif; ?>
     </div>
+
+    <!-- The div at the bottom that handles other UI controls -->
     <div id="bottomControlContainer" class="w-full flex flex-row justify-center p-8 gap-x-4 fixed bottom-0">
 
       <?php if ($signed_in): ?>
@@ -156,7 +187,7 @@ function isInAnyGroup($id_to_check) : bool {
 hover:bg-violet-600 active:bg-violet-700">
           Add group
         </button>
-        <button id="log-out-btn" class="text-violet-50 text-2xl bg-violet-400 shadow-xl p-2 rounded-md
+        <button onclick="location.href = 'php/logout.php';" id="log-out-btn" class="text-violet-50 text-2xl bg-violet-400 shadow-xl p-2 rounded-md
  hover:bg-violet-600 active:bg-violet-700">
           Log out
         </button>
