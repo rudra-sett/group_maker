@@ -31,7 +31,8 @@ if (isset($_SESSION['user_id'])) {
 
 function isInAnyGroup($id_to_check) : bool {
   global $conn;
-  $check_query = "SELECT * FROM groups_and_members";
+  $check_query = "SELECT * FROM groups_and_members 
+  WHERE `groups_and_members`.`member_id` = '$id_to_check'";
   $res = $conn->query($check_query);
   $num_results = $res->num_rows;
   if ($num_results > 0) {
@@ -151,7 +152,7 @@ function isInAnyGroup($id_to_check) : bool {
     <div id="bottomControlContainer" class="w-full flex flex-row justify-center p-8 gap-x-4 fixed bottom-0">
 
       <?php if ($signed_in): ?>
-        <button id="add-group-btn" class="place-self-center text-violet-50 text-2xl bg-violet-400 p-2 rounded-md shadow-xl 
+        <button onclick="window.location.href = 'add_group.php';" id="add-group-btn" class="place-self-center text-violet-50 text-2xl bg-violet-400 p-2 rounded-md shadow-xl 
 hover:bg-violet-600 active:bg-violet-700">
           Add group
         </button>
